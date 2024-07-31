@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Comment Scroller</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        #comments {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #comments div {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        #comments p {
+            font-size: large; 
+            font-weight: bold; 
+            color: #00000057; 
+        }
+        #footer {
+            margin-top: 20px;
+            font-size: small;
+            color: #080303;
+        }
+    </style>
+</head>
+<body>
+    <h1>Usage Information</h1> 
+    <div id="comments">
+        <p>Please refresh the page when you switch to a new video.</p> 
+    </div>
+    <div id="footer">
+        Made by Maruf Korkutata
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video with Scrolling Comments</title>
+    <style>
+        #video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            background-color: #000;
+        }
+
+        iframe {
+            width: 100%;
+            height: 450px;
+            display: block;
+        }
+
+        #comments {
+            position: absolute;
+            bottom: 70px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        #scrolling-comments {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 45s linear;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="video-container">
+        <iframe id="video-iframe" frameborder="0" allowfullscreen></iframe>
+        <div id="comments">
+            <div id="scrolling-comments">
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchComments() {
+            const response = await fetch('/comments');
+            const data = await response.json();
+            return data.comments;
+        }
+
+        function displayComment(comment) {
+            const commentsContainer = document.getElementById('scrolling-comments');
+            commentsContainer.innerText = comment;
+            commentsContainer.style.animation = 'none';
+            commentsContainer.offsetHeight;
+            commentsContainer.style.animation = null; 
+        }
+
+        async function startCommentsDisplay() {
+            const comments = await fetchComments();
+            const delay = 5000; 
+            let currentIndex = 0;
+
+            if (comments.length > 0) {
+                displayComment(comments[currentIndex]);
+
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % comments.length;
+                    displayComment(comments[currentIndex]);
+                }, delay + 45000); 
+            } else {
+                displayComment('Please refresh the page when you switch to a new video.');
+            }
+        }
+
+        
+        const videoId = "{{ video_id }}";
+        document.getElementById('video-iframe').src = `https://www.youtube.com/embed/${videoId}`;
+
+        startCommentsDisplay();
+    </script>
+</body>
+</html>
