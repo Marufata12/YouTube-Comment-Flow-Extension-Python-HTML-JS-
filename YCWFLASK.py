@@ -6,7 +6,7 @@ from waitress import serve
 app = Flask(__name__)
 app.config.from_object(Config)
 
-API_KEY = app.config['PUT HERE YOUR API KEY(YouTube Data API v3 v3)']
+API_KEY = app.config['Apı key coming from config.py']
 BASE_URL = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&order=relevance'
 
 def fetch_comments(video_id, max_results=100):
